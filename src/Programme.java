@@ -1,13 +1,13 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Programme {
 
     public static void main(String[] args) throws FileNotFoundException {
 
         Sonar sonar1 = new Sonar();
-        System.out.println(sonar1.runSonar());
+       // System.out.println(sonar1.runSonar()); //This will give the answer to Part 1
+        System.out.println(sonar1.runSonarWindows()); //This will give the answer to Part 2
+
 
     }
 }
