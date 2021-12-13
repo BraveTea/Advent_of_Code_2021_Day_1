@@ -1,4 +1,3 @@
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,17 +13,15 @@ public class Sonar {
     // measurement where it shouldn't because the first measurement doesn't have a previous
 
 
-    File measurementsFile = new File("src/measurements.txt");
-    Scanner inputFile = new Scanner(measurementsFile);
 
-    File testFile = new File("src/testFile.txt");
-    Scanner inputTestFile = new Scanner(testFile);
 
-    Sonar() throws FileNotFoundException {
+
+    Sonar() {
     }
 
     int runSonar() throws FileNotFoundException {
-
+        File measurementsFile = new File("src/measurements.txt");
+        Scanner inputFile = new Scanner(measurementsFile);
 
         while (inputFile.hasNext()) {
             currentMeasurement = Integer.parseInt(inputFile.next());
@@ -34,7 +31,7 @@ public class Sonar {
             previousMeasurement = currentMeasurement;
 
         }
-
+        inputFile.close();
         return count;
 
     }
@@ -42,15 +39,15 @@ public class Sonar {
 
     ArrayList<Integer> windows = new ArrayList<>();
 
-    int runSonarWindows(){
+    int runSonarWindows() throws FileNotFoundException {
 
+        File measurementsFile = new File("src/measurements.txt");
+        Scanner inputFile = new Scanner(measurementsFile);
         ArrayList<Integer> allMeasurementsInList = new ArrayList<>();
 
         while (inputFile.hasNext()){
             allMeasurementsInList.add(Integer.parseInt(inputFile.next()));
         }
-        System.out.println(allMeasurementsInList);
-        System.out.println(allMeasurementsInList.size());
 
         for (int i = 0; i < allMeasurementsInList.size()-2; i++){
             int firstMeasurement = allMeasurementsInList.get(i);
@@ -58,7 +55,19 @@ public class Sonar {
             int thirdMeasurement = allMeasurementsInList.get(i+2);
             windows.add(firstMeasurement + secondMeasurement + thirdMeasurement);
         }
-        System.out.println(windows);
-        return 0;
+
+        int curNum;
+        int prevNum = 0;
+        int counter2 = -1;
+
+        for (int num : windows){
+            curNum = num;
+            if (curNum > prevNum){
+                counter2 += 1;
+            }
+            prevNum = curNum;
+        }
+        inputFile.close();
+        return counter2;
     }
 }
